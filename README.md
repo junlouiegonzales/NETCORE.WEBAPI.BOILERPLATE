@@ -21,10 +21,10 @@ If you want to learn more about creating good readme files then refer the follow
 
 # Migration
 ## List all available migration
-cd HRPayroll.Api && dotnet ef migrations list --startup-project HRPayroll.Api.csproj --context "HRPayrollDbContext" --project ../HRPayroll.Persistence/HRPayroll.Persistence.csproj --msbuildprojectextensionspath obj/local/
+cd NETCORE.Api && dotnet ef migrations list --startup-project NETCORE.Api.csproj --context "NetCoreDbContext" --project ../NETCORE.Persistence/NETCORE.Persistence.csproj --msbuildprojectextensionspath obj/local/
 
 ## Update database to specific migration
-cd HRPayroll.Api && dotnet ef database update <migration-name> --startup-project HRPayroll.Api.csproj --context "HRPayrollDbContext" --project ../HRPayroll.Persistence/HRPayroll.Persistence.csproj --msbuildprojectextensionspath obj/local/
+cd NETCORE.Api && dotnet ef database update <migration-name> --startup-project NETCORE.Api.csproj --context "NetCoreDbContext" --project ../NETCORE.Persistence/NETCORE.Persistence.csproj --msbuildprojectextensionspath obj/local/
 
 ## Create Migration
-cd HRPayroll.Api && dotnet ef migrations add <migration-name> --startup-project HRPayroll.Api.csproj --context "HRPayrollDbContext" --output-dir ./Migrations --project ../HRPayroll.Persistence/HRPayroll.Persistence.csproj --msbuildprojectextensionspath obj/local/
+cd NETCORE.Api && dotnet ef migrations add <migration-name> --startup-project NETCORE.Api.csproj --context "NetCoreDbContext" --output-dir ./Migrations --project ../NETCORE.Persistence/NETCORE.Persistence.csproj --msbuildprojectextensionspath obj/local/
