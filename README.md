@@ -27,4 +27,4 @@ cd NETCORE.Api && dotnet ef migrations list --startup-project NETCORE.Api.csproj
 cd NETCORE.Api && dotnet ef database update 1.0.0.0 --startup-project NETCORE.Api.csproj --context "NetCoreDbContext" --project ../NETCORE.Persistence/NETCORE.Persistence.csproj --msbuildprojectextensionspath obj/local/
 
 ## Create Migration
-cd NETCORE.Api && dotnet ef migrations add 1.0.0.0  --startup-project NETCORE.Api.csproj --context "NetCoreDbContext" --output-dir ./Migrations --project ../NETCORE.Persistence/NETCORE.Persistence.csproj --msbuildprojectextensionspath obj/local/
+cd NETCORE.Api && dotnet ef migrations add 1.0.0.1  --startup-project NETCORE.Api.csproj --context "NetCoreDbContext" --output-dir ./Migrations --project ../NETCORE.Persistence/NETCORE.Persistence.csproj --msbuildprojectextensionspath obj/local/
