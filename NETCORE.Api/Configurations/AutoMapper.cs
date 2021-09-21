@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace NETCORE.Api.Configurations
@@ -10,8 +11,7 @@ namespace NETCORE.Api.Configurations
             services.AddAutoMapper(
                 configAction =>
                 {
-                    ///TODO: What happened to inline maps. Do more research?
-                    //configAction.ValidateInlineMaps = false;
+                    configAction.ValidateInlineMaps = false;
                 },
                 typeof(Application.Response)
                 );

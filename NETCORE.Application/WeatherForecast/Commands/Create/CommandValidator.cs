@@ -6,8 +6,8 @@ namespace NETCORE.Application.WeatherForecast.Commands.Create
     {
         public CommandValidator()
         {
-            RuleFor(t => t.Type).NotEmpty();
-            RuleFor(t => t.Temperature).NotEmpty();
+            RuleFor(t => t.Type).NotNull();
+            RuleFor(t => t.Temperature).NotNull();
             RuleFor(t => t.Wind).NotEmpty();
             RuleFor(t => t.Precipitation).NotEmpty();
         }

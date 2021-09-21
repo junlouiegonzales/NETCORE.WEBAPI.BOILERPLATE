@@ -11,7 +11,7 @@ namespace NETCORE.Api.Controllers
     public class WeatherForecastController : BaseController
     {
         [HttpPost()]
-        [Description("Create weather forecase based on json body")]
+        [Description("Create weather forecast based on json body")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> Create([FromBody] WeatherForecastCommand.Create.Command command)
         {
@@ -25,7 +25,7 @@ namespace NETCORE.Api.Controllers
         }
 
         [HttpPut()]
-        [Description("Update weather forecase based on json body")]
+        [Description("Update weather forecast based on json body")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Update([FromBody] WeatherForecastCommand.Update.Command command)
         {
@@ -39,7 +39,7 @@ namespace NETCORE.Api.Controllers
         }
 
         [HttpDelete()]
-        [Description("Delete weather forecase based on id")]
+        [Description("Delete weather forecast based on id")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteWeatherForecast([FromQuery] WeatherForecastCommand.Delete.Command command)
         {
