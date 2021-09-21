@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NETCORE.Domain.Entities;
 
 namespace NETCORE.Persistence.Context
 {
@@ -12,5 +13,7 @@ namespace NETCORE.Persistence.Context
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Weather> Weathers { get; set; }
     }
 }

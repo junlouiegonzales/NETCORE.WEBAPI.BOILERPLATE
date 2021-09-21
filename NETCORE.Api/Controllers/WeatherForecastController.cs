@@ -1,39 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.ComponentModel;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using NETCORE.Application;
+using WeatherForecastCommand = NETCORE.Application.WeatherForecast.Commands;
 
 namespace NETCORE.Api.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [Route("api/weatherforecast")]
+    public class WeatherForecastController : BaseController
     {
-        private static readonly string[] Summaries = new[]
+        [HttpPost()]
+        [Description("Create weather forecase based on json body")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> Create([FromBody] WeatherForecastCommand.Create.Command command)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            var result = await Mediator.Send(command);
+            
+            if (result is BadRequestResponse)
+                return BadRequest(result.Message);
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
+            var data = ((SuccessResponse<bool>)result).Data;
+            return Created("", data);
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpPut()]
+        [Description("Update weather forecase based on json body")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Update([FromBody] WeatherForecastCommand.Update.Command command)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var result = await Mediator.Send(command);
+            
+            if (result is BadRequestResponse)
+                return BadRequest(result.Message);
+
+            var data = ((SuccessResponse<bool>)result).Data;
+            return Ok(data);
+        }
+
+        [HttpDelete()]
+        [Description("Delete weather forecase based on id")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteWeatherForecast([FromQuery] WeatherForecastCommand.Delete.Command command)
+        {
+            var result = await Mediator.Send(command);
+            
+            if (result is BadRequestResponse)
+                return BadRequest(result.Message);
+
+            var data = ((SuccessResponse<bool>)result).Data;
+            return Ok(data);
         }
     }
 }
