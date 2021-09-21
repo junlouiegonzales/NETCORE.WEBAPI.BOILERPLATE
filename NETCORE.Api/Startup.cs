@@ -1,17 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-
+using NETCORE.Persistence.Context;
+using Microsoft.AspNetCore.HttpOverrides;
+using static NETCORE.Api.Configurations.Db;
+using static NETCORE.Api.Configurations.Mvc;
+using static NETCORE.Api.Configurations.CORS;
+using static NETCORE.Api.Configurations.MediatR;
+using static NETCORE.Api.Configurations.Swagger;
+using static NETCORE.Api.Configurations.Services;
+using static NETCORE.Api.Configurations.AutoMapper;
+using static NETCORE.Api.Configurations.FluentValidation;
 namespace NETCORE.Api
 {
     public class Startup
@@ -26,34 +27,35 @@ namespace NETCORE.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NETCORE.Api", Version = "v1" });
-            });
+            RegisterEntityFramework(services, Configuration);
+            RegisterSwagger(services);
+            RegisterMediatR(services);
+            RegisterAutoMapper(services);
+            RegisterServices(services, Configuration);
+            IMvcBuilder mvcBuilder = RegisterMvc(services);
+            AddFluentValidation(mvcBuilder);
+            AddCorsPolicy(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, NetCoreDbContext context)
         {
+            app.UseCors("default");
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            ConfigureSwagger(app);
+            ConfigureMvc(app);
+            ConfigureDatabaseMigrations(context);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NETCORE.Api v1"));
+                SeedDatabase(context);
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
         }
     }
 }

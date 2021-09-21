@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace NETCORE.ServicesUnitTest
+namespace NETCORE.Tests
 {
     public class UnitTest1
     {

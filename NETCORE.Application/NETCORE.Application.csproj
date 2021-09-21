@@ -9,4 +9,11 @@
     <ProjectReference Include="..\NETCORE.Services\NETCORE.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.3" />
+    <PackageReference Include="IdentityModel" Version="5.1.0" />
+    <PackageReference Include="NJsonSchema" Version="10.5.2" />
+  </ItemGroup>
+
 </Project>

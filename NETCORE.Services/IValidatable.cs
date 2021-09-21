@@ -2,7 +2,8 @@
 
 namespace NETCORE.Services
 {
-    public class Class1
+    public interface IValidatable
     {
+        void Validate();
     }
 }
